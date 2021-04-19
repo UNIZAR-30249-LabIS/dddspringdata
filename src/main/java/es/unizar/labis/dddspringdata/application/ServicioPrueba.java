@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -33,8 +34,10 @@ public class ServicioPrueba {
 		blanca.setNumeroDeProductosComprados(3);
 		var cosme = new Trabajador("Cosme");
 		cosme.setDepartamento("Ventas");
+		var cosme2 = new Cliente("Cosme");
+		cosme2.setNumeroDeProductosComprados(12);
 
-		personaRepository.saveAll(Arrays.asList(abel, blanca, cosme));
+		personaRepository.saveAll(Arrays.asList(abel, blanca, cosme, cosme2));
 
 		var unAbel = personaRepository.findTrabajadorByNombre("Abel");
 		log.info("No hay Abel trabajador, por tanto esto debe ser null: " + unAbel);
@@ -43,7 +46,7 @@ public class ServicioPrueba {
 		log.info("Sí que hay Abel cliente, por tanto esto debe ser Abel: " + otroAbel.getNombre());
 		log.info("Y como cliente, este Abel tiene un número de productos comprados: " + otroAbel.getNumeroDeProductosComprados());
 
-		Persona tercerAbel = personaRepository.findByNombre("Abel");
+		Persona tercerAbel = personaRepository.findFirstByNombre("Abel");
 		log.info("Abel es una persona, así que lo encontramos. Este será su nombre: " + tercerAbel.getNombre());
 		log.info("Y aunque lo hemos buscado como persona, como cliente, este Abel tiene un número de productos comprados: " + otroAbel.getNumeroDeProductosComprados());
 
@@ -51,9 +54,15 @@ public class ServicioPrueba {
 		Optional<Persona> esteEsElAbelOriginal = personaRepository.findById(abel.getId());
 		log.info("Los métodos por defecto también funcionan. Este es el nombre del Abel guardado: " + esteEsElAbelOriginal.get().getNombre());
 
-		// Podemos tratar uniformemente a todas las personas devueltas, aunque sean de distintas subclases
+		log.info("Podemos tratar uniformemente a todas las personas devueltas, aunque sean de distintas subclases.");
 		for (var persona:personaRepository.findAll()) {
 			log.info("Persona : " + persona.getNombre());
 		}
+
+		// Hay dos Cosmes, uno es trabajador y otro cliente
+		for (var unCosme:personaRepository.findAllByNombre("Cosme")) {
+			log.info("Este Cosme es " + unCosme.getClass().getName() + " y su ID es " + unCosme.getId());
+		}
+
 	}
 }

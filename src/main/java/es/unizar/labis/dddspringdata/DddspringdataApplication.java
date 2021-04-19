@@ -20,7 +20,8 @@ public class DddspringdataApplication {
 	@Bean
 	public CommandLineRunner runner() {
 		return (args) -> {
-			servicioPrueba.test();
+			servicioPrueba.testPersona();
 		};
 	}
 }
+

@@ -2,31 +2,29 @@ package es.unizar.labis.dddspringdata.application;
 
 
 import es.unizar.labis.dddspringdata.DddspringdataApplication;
-import es.unizar.labis.dddspringdata.domain.Cliente;
-import es.unizar.labis.dddspringdata.domain.Persona;
-import es.unizar.labis.dddspringdata.domain.PersonaRepository;
-import es.unizar.labis.dddspringdata.domain.Trabajador;
+import es.unizar.labis.dddspringdata.domain.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 @Service
 public class ServicioPrueba {
-	private final PersonaRepository<Persona> personaRepository;
+	private final PersonaRepository personaRepository;
 	private static final Logger log = LoggerFactory.getLogger(DddspringdataApplication.class);
-
 
 	public ServicioPrueba(PersonaRepository pR) {
 		this.personaRepository = pR;
 	}
 
-	public void test() {
+	public void testPersona() {
 
 		var abel = new Cliente("Abel");
 		abel.setNumeroDeProductosComprados(5);
@@ -64,5 +62,9 @@ public class ServicioPrueba {
 			log.info("Este Cosme es " + unCosme.getClass().getName() + " y su ID es " + unCosme.getId());
 		}
 
+		Persona diana = new Cliente("Diana");
+		personaRepository.save(diana);
+
 	}
+
 }

@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface PersonaRepository<T extends Persona> extends CrudRepository<T, Long> {
+public interface PersonaRepository extends CrudRepository<Persona, Long> {
 	Trabajador findTrabajadorByNombre(String name);
 	Cliente findClienteByNombre(String name);
 	Persona findFirstByNombre(String name);
